@@ -138,6 +138,9 @@ readable_near_locations
 # Creating a map of all "bookable" airbnbs, the darker the colour, the more expensive the appartment
 # HINT: you can hover and zoom!
 
+### Importing plotly to create more graphs
+import plotly.graph_objects as go
+
 ### Data
 bookable_lat = bookable_price["latitude"]
 bookable_long = bookable_price["longitude"]
@@ -173,9 +176,6 @@ fig2.show()
 
 # Creating a map of near and bookable airbnbs with an overlay of the transport stations
 # Hovering shows you the id of the airbnb
-
-### Importing plotly to create more graphs
-import plotly.graph_objects as go
 
 ### Data
 transport_lat = transport_links["latitude"].to_list()
