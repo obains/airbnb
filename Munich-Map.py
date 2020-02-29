@@ -1,27 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
-
-
 # Dependencies and File Imports
 import pandas as pd
 
 listings = pd.read_csv("listings.csv")
 reviews = pd.read_csv("reviews.csv")
 
-
-# In[12]:
-
-
 # Merging Data Sources
 review_listing = pd.merge(left=listings, right=reviews, how='left', left_on='id', right_on='listing_id')
 review_listing.rename(columns={'id_x':'id', 'id_y':"review_id"}, inplace=True)
 airbnb = review_listing
-
-
-# In[13]:
-
 
 # Filling NaN reviews
 airbnb.fillna({'reviews_per_month':0})
@@ -29,16 +18,9 @@ airbnb.fillna({'reviews_per_month':0})
 # Dropping unnecessary columns
 airbnb.drop(["reviewer_name", "last_review", "name", "neighbourhood_group", "reviews_per_month", "calculated_host_listings_count"], axis=1, inplace=True)
 
-
-# In[ ]:
-
-
 # Isolating districts and room types
 print(airbnb["neighbourhood"].unique())
 print(airbnb["room_type"].unique())
-
-
-# In[29]:
 
 
 # Conditions for being "bookable":
@@ -53,9 +35,6 @@ reviews = airbnb["number_of_reviews"] > 5
 bookable_price = airbnb[price_reasonable & appt & reviews]
 
 
-# In[31]:
-
-
 # Initial graph
 # Which Neighbourhoods are generally the most expensive / most cheap?
 import seaborn as sns
@@ -68,8 +47,6 @@ plot2=sns.violinplot(data=bookable_price, y='neighbourhood', x='price', cut=2, l
 plot2.set_title('Density and distribution of prices for each Neighberhood Group')
 plot2.set_xticklabels(plot2.get_xticklabels(), rotation=90)
 
-
-# In[34]:
 
 
 # Price density of the airbnb's which we defined as "bookable"
@@ -88,8 +65,6 @@ bookable_price.plot(kind='scatter', x='longitude', y='latitude', label='availabi
 
 plt.show()
 
-
-# In[37]:
 
 
 # Creating a data frame for transportation stations to the Allianz Arena (including the stadium itself)
@@ -123,8 +98,6 @@ d= {'latitude': [48.218964, 48.177713,48.173279,48.172909,48.166628,48.162051,48
 transport_links = pd.DataFrame(d)
 
 
-# In[46]:
-
 
 # Creating a dataset of "bookable" airbnbs which are also close to transport links to the stadium
 
@@ -155,17 +128,11 @@ near_locations = pd.merge(dfa, dfb, how='inner', on=['id', 'host_id', 'host_name
        'availability_365', 'listing_id', 'review_id', 'date', 'reviewer_id',
        'comments'])
 
-
-# In[52]:
-
-
 readable_near_locations = near_locations.drop(["host_id", "host_id", "latitude", 
                 "longitude", "room_type", "number_of_reviews","listing_id",
                             "review_id", "date", "reviewer_id", "comments"], axis=1)
 readable_near_locations
 
-
-# In[63]:
 
 
 # Creating a map of all "bookable" airbnbs, the darker the colour, the more expensive the appartment
@@ -204,9 +171,6 @@ fig2.update_layout(
 fig2.show()
 
 
-# In[61]:
-
-
 # Creating a map of near and bookable airbnbs with an overlay of the transport stations
 # Hovering shows you the id of the airbnb
 
@@ -224,7 +188,7 @@ near_long = near_locations["longitude"]
 name = near_locations["id"]
 
 ### Creating the map
-mapbox_access_token = "pk.eyJ1Ijoib2xpdmVyYmFpbnMiLCJhIjoiY2s3NjNqOG16MDBhZDNubWs5NTh5ZzV6diJ9.FilhBHaINRJRvA9G7F0z4A"
+mapbox_access_token = "enter token here"
 
 fig = go.Figure()
 
@@ -257,136 +221,3 @@ fig.update_layout(
         zoom=11))
 
 fig.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[39]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
